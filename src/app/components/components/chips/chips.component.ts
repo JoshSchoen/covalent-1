@@ -40,10 +40,14 @@ export class ChipsDemoComponent {
                   Sends chip value as event.`,
     name: 'remove?',
     type: 'function',
+  },  {
+    description: `Disables the ability to add chips. If it doesn't exist chipAddition defaults to true.`,
+    name: 'chipAddition?',
+    type: 'boolean',
   }];
 
   readOnly: boolean = false;
-  autoComplete: boolean = false;
+  chipAddition: boolean = true;
 
   items: string[] = [
     'stepper',
@@ -60,9 +64,5 @@ export class ChipsDemoComponent {
   ];
 
   itemsRequireMatch: string[] = this.items.slice(0, 6);
-
-  toggleReadOnly(): void {
-    this.readOnly = !this.readOnly;
-  }
 
 }
