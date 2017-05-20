@@ -34,6 +34,7 @@ export class TdChipsComponent implements ControlValueAccessor, DoCheck, OnInit {
   private _requireMatch: boolean = false;
   private _readOnly: boolean = false;
   private _chipAddition: boolean = true;
+  private _chipRemoval: boolean = true;
 
   @ViewChild(MdInputDirective) _inputChild: MdInputDirective;
   @ViewChildren(MdChip) _chipsChildren: QueryList<MdChip>;
@@ -115,7 +116,14 @@ export class TdChipsComponent implements ControlValueAccessor, DoCheck, OnInit {
   get chipAddition(): boolean {
     return this._chipAddition;
   }
-
+  @Input('chipRemoval')
+    set chipRemoval(chipRemoval: boolean) {
+      this._chipRemoval = chipRemoval;
+      this._toggleInput();
+    }
+    get chipRemoval(): boolean {
+      return this._chipRemoval;
+    }
   /**
    * Checks if not in readOnly state and if chipAddition is set to 'true'
    * States if a chip can be added and if the input is available
@@ -159,6 +167,7 @@ export class TdChipsComponent implements ControlValueAccessor, DoCheck, OnInit {
   get value(): any { return this._value; }
 
   ngOnInit(): void {
+    console.log(this.chipRemoval);
     this.inputControl.valueChanges
       .debounceTime(100)
       .subscribe((value: string) => {
@@ -287,12 +296,15 @@ export class TdChipsComponent implements ControlValueAccessor, DoCheck, OnInit {
            * Checks if deleting last single chip, to focus input afterwards
            * Else check if its not the last chip of the list to focus the next one.
            */
+          if(this.chipRemoval) {
+
           if (index === (this._totalChips - 1) && index === 0 && this.autoComplete) {
             this.focus();
           } else if (index < (this._totalChips - 1)) {
             this._focusChip(index + 1);
           }
           this.removeChip(this.value[index]);
+        }
         }
         break;
       case LEFT_ARROW:
