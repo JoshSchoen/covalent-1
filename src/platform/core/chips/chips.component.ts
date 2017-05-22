@@ -95,6 +95,8 @@ export class TdChipsComponent implements ControlValueAccessor, DoCheck, OnInit {
     return this._readOnly;
   }
 
+  @Input('autoComplete') autoComplete: boolean = true;
+
   /**
    * chipAddition?: boolean
    * Disables the ability to add chips. If it doesn't exist chip addition defaults to true.
@@ -108,7 +110,6 @@ export class TdChipsComponent implements ControlValueAccessor, DoCheck, OnInit {
   get chipAddition(): boolean {
     return this._chipAddition;
   }
-
     /**
    * chipRemoval?: boolean
    * Disables the ability to remove chips. If it doesn't exist chip remmoval defaults to true.
@@ -121,7 +122,6 @@ export class TdChipsComponent implements ControlValueAccessor, DoCheck, OnInit {
     get chipRemoval(): boolean {
       return this._chipRemoval;
     }
-
   /**
    * Checks if not in readOnly state and if chipAddition is set to 'true'
    * States if a chip can be added and if the input is available

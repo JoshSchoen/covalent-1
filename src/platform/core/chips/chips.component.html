@@ -24,7 +24,6 @@
               (focus)="handleFocus()"
               (blur)="handleBlur()">
     </md-input-container>
-
     <md-autocomplete #autocomplete="mdAutocomplete">
       <ng-template let-item ngFor [ngForOf]="filteredItems | async">
         <md-option (click)="addChip(item)" [value]="item">{{item}}</md-option>
