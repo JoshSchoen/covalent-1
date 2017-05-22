@@ -106,7 +106,7 @@ export class TdChipsComponent implements ControlValueAccessor, DoCheck, OnInit {
   /**
    * chipAddition?: boolean
    * Disables the ability to add chips. If it doesn't exist chip addition defaults to true.
-   * When setting readOnly as true, this will be overriden.
+   * When setting readOnly as true, this will be overriden to false.
    */
   @Input('chipAddition')
   set chipAddition(chipAddition: boolean) {
@@ -116,10 +116,14 @@ export class TdChipsComponent implements ControlValueAccessor, DoCheck, OnInit {
   get chipAddition(): boolean {
     return this._chipAddition;
   }
+    /**
+   * chipRemoval?: boolean
+   * Disables the ability to remove chips. If it doesn't exist chip remmoval defaults to true.
+   * When setting readOnly as true, this will be overriden to false.
+   */
   @Input('chipRemoval')
     set chipRemoval(chipRemoval: boolean) {
       this._chipRemoval = chipRemoval;
-      this._toggleInput();
     }
     get chipRemoval(): boolean {
       return this._chipRemoval;
@@ -167,7 +171,6 @@ export class TdChipsComponent implements ControlValueAccessor, DoCheck, OnInit {
   get value(): any { return this._value; }
 
   ngOnInit(): void {
-    console.log(this.chipRemoval);
     this.inputControl.valueChanges
       .debounceTime(100)
       .subscribe((value: string) => {
@@ -292,19 +295,22 @@ export class TdChipsComponent implements ControlValueAccessor, DoCheck, OnInit {
       case BACKSPACE:
         /** Check to see if not in [readOnly] state to delete a chip */
         if (!this.readOnly) {
-          /**
-           * Checks if deleting last single chip, to focus input afterwards
-           * Else check if its not the last chip of the list to focus the next one.
+          /** 
+           * Nested conditional to see if in [chipRemoval] state to delete a chip
+           * To enable [chipRemoval] the [readOnly] state must be true.
            */
           if(this.chipRemoval) {
-
-          if (index === (this._totalChips - 1) && index === 0 && this.autoComplete) {
-            this.focus();
-          } else if (index < (this._totalChips - 1)) {
-            this._focusChip(index + 1);
+            /**
+             * Checks if deleting last single chip, to focus input afterwards
+             * Else check if its not the last chip of the list to focus the next one.
+             */
+            if (index === (this._totalChips - 1) && index === 0 && this.autoComplete) {
+              this.focus();
+            } else if (index < (this._totalChips - 1)) {
+              this._focusChip(index + 1);
+            }
+            this.removeChip(this.value[index]);
           }
-          this.removeChip(this.value[index]);
-        }
         }
         break;
       case LEFT_ARROW:
