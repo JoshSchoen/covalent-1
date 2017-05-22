@@ -82,8 +82,6 @@ export class TdChipsComponent implements ControlValueAccessor, DoCheck, OnInit {
     return this._requireMatch;
   }
 
-
-
   /**
    * readOnly?: boolean
    * Disables the chips input and chip removal icon.
@@ -96,12 +94,6 @@ export class TdChipsComponent implements ControlValueAccessor, DoCheck, OnInit {
   get readOnly(): boolean {
     return this._readOnly;
   }
-
-    /**
-   * readOnly?: boolean
-   * Disables the chips input and chip removal icon.
-   */
-  @Input('autoComplete') autoComplete: boolean = true;
 
   /**
    * chipAddition?: boolean
@@ -116,6 +108,7 @@ export class TdChipsComponent implements ControlValueAccessor, DoCheck, OnInit {
   get chipAddition(): boolean {
     return this._chipAddition;
   }
+
     /**
    * chipRemoval?: boolean
    * Disables the ability to remove chips. If it doesn't exist chip remmoval defaults to true.
@@ -128,6 +121,7 @@ export class TdChipsComponent implements ControlValueAccessor, DoCheck, OnInit {
     get chipRemoval(): boolean {
       return this._chipRemoval;
     }
+
   /**
    * Checks if not in readOnly state and if chipAddition is set to 'true'
    * States if a chip can be added and if the input is available
